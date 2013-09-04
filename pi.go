@@ -74,3 +74,13 @@ func doResets(flags int) {
 
 	}
 }
+
+func Write(p int, m int) {
+	C.digitalWrite(C.int(p), C.int(m));
+}
+
+func Test() {
+	C.wiringPiSetup();
+	C.pinMode(C.int(8), C.OUTPUT);
+	C.digitalWrite(C.int(8), C.HIGH);
+}
