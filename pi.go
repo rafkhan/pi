@@ -9,6 +9,7 @@ package pi
 import "C"
 
 import (
+	"fmt"
 	"errors"
 )
 
@@ -29,6 +30,14 @@ const (
 	RESET_HIGH
 )
 
+const (
+	INPUT = C.INPUT
+	OUTPUT = C.OUTPUT
+
+	HIGH = C.HIGH
+	LOW = C.LOW
+)
+
 func Setup(flags int) error {
 	if err := callWiringSetup(flags); err != nil {
 		return err;
@@ -40,6 +49,7 @@ func Setup(flags int) error {
 func callWiringSetup(flags int) error {
 	if(flags & SETUP_WIRING == SETUP_WIRING) {
 		C.wiringPiSetup();
+		fmt.Println("testing");
 		return nil;
 
 	} else if(flags & SETUP_GPIO == SETUP_GPIO) {
@@ -75,12 +85,10 @@ func doResets(flags int) {
 	}
 }
 
-func Write(p int, m int) {
-	C.digitalWrite(C.int(p), C.int(m));
+func PinMode(p int, m int) {
+	C.pinMode(C.int(p), C.int(m));
 }
 
-func Test() {
-	C.wiringPiSetup();
-	C.pinMode(C.int(8), C.OUTPUT);
-	C.digitalWrite(C.int(8), C.HIGH);
+func Write(p int, m int) {
+	C.digitalWrite(C.int(p), C.int(m));
 }
